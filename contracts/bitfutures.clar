@@ -24,3 +24,33 @@
 (define-constant err-already-claimed (err u104))
 (define-constant err-insufficient-balance (err u105))
 (define-constant err-invalid-parameter (err u106))
+
+;; State Variables
+
+;; Platform configuration
+(define-data-var oracle-address principal 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM)
+(define-data-var minimum-stake uint u1000000) ;; 1 STX minimum stake
+(define-data-var fee-percentage uint u2) ;; 2% platform fee
+(define-data-var market-counter uint u0)
+
+;; Data Maps
+
+;; Market data structure
+(define-map markets
+    uint
+    {
+        start-price: uint,
+        end-price: uint,
+        total-up-stake: uint,
+        total-down-stake: uint,
+        start-block: uint,
+        end-block: uint,
+        resolved: bool
+    }
+)
+
+;; User predictions tracking
+(define-map user-predictions
+    {market-id: uint, user: principal}
+    {prediction: (string-ascii 4), stake: uint, claimed: bool}
+)
